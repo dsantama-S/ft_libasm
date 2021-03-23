@@ -1,24 +1,24 @@
-SRCS	= ft_strlen.s
-CFLAGS	= -fmacho64
-CC		= nasm
-OBJS	= ${SRCS:.s=.o}
-NAME	= libasm.a
-RM		= rm -f
+NAME = libasm.a
+CFLAGS = -Wall -Werror -Wextra -I. -c
+NFLAGS = -f macho64
+SRC = ft_strlen.s ft_strcpy.s
+OBJ = $(SRC:.s=.o)
 
-all:	${NAME}
+%.o:%.s
+	nasm $(NFLAGS) $<
 
-$(NAME):		${OBJS}
-				ar rcs ${NAME} ${OBJS}
-
-%.o:			%.s
-				${CC} ${CFLAGS} $<
+all: $(NAME)
+$(NAME): $(OBJ)
+	ar rc $(NAME) $(OBJ)
+	gcc -c main.c
+	gcc main.o $(OBJ)
 
 clean:
-				${RM} ${OBJS}
+	rm -f $(OBJ) main.o
 
-fclean:			clean
-				${RM} ${NAME}
+fclean: clean
+	rm -f $(NAME) a.out
 
-re:				fclean all
+re: fclean all
 
-.PHONY : all clean fclean re
+.PHONY: clean fclean all re
