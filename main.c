@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #define VERDE_T        "\x1b[32m"
 #define ROJO_T     "\x1b[31m"
 #define RESET_COLOR    "\x1b[0m"
 int ft_strlen(const char *);
 char *ft_strcpy(char *, const char *);
+int ft_strcmp(const char *, const char *);
+ssize_t ft_write(int, const void *, size_t);
+
 static int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
@@ -43,6 +47,20 @@ int main()
 	strcpy(s1, "adios");
 	ft_strcpy(s2, "adios");
 	if (ft_strncmp(s1, s2, 5) == 0)
+		printf(VERDE_T "[TEST OK]" RESET_COLOR "\n");
+	else
+		printf(ROJO_T "[TEST FAILED]" RESET_COLOR "\n");
+	printf("\nTEST FT_STRCMP:\n");
+	i = strcmp("hola", "hiasdkan");
+	n = ft_strcmp("hola", "hiasdkan");
+	if (i == n)
+		printf(VERDE_T "[TEST OK]" RESET_COLOR "\n");
+	else
+		printf(ROJO_T "[TEST FAILED]" RESET_COLOR "\n");
+	printf("\nTEST FT_STRCMP:\n");
+	i = write(1, "hola\n", 5);
+	n = ft_write(1, "hola\n", 5);
+	if (i == n)
 		printf(VERDE_T "[TEST OK]" RESET_COLOR "\n");
 	else
 		printf(ROJO_T "[TEST FAILED]" RESET_COLOR "\n");
